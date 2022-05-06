@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    env_file:
+      - .env
+    container_name: project2
+    volumes:
+      - ./data/project2postgres:/var/lib/postgresql/data
+      - ./psql.sh:/docker-entrypoint-initdb.d/psql.sh

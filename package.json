@@ -1,0 +1,72 @@
+{
+    "name": "storefront_backend",
+    "description": "",
+    "main": "index.ts",
+    "author": "mahmoud77selim",
+    "email": "",
+    "license": "ISC",
+    "version": "1.0",
+    "private": true,
+
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mahmoud77selim/storefront_backend.git"
+      },
+
+    "scripts": {
+        "start": "node ./dist/index.js",
+        "watch": "tsc-watch --esModuleInterop src/index.ts --outDir ./dist --onSuccess \"node ./dist/index.js\"",
+        "dev": "nodemon src/index.ts",
+        "build": "rm -rf ./dist/* && tsc --build",
+        "prod": "npm run build && NODE_ENV=production && npm run start",
+        "db-migrate-sql": "node node_modules/db-migrate/bin/db-migrate create users-table --sql-file && node node_modules/db-migrate/bin/db-migrate create products-table --sql-file && node node_modules/db-migrate/bin/db-migrate create orders-table --sql-file && node node_modules/db-migrate/bin/db-migrate create order-products-table --sql-file",
+
+        "migrate-up"   : "set ENV=test && node node_modules/db-migrate/bin/db-migrate --env test up && node node_modules/db-migrate/bin/db-migrate up",
+        "migrate-down" : "set ENV=test && node node_modules/db-migrate/bin/db-migrate --env test up && node node_modules/db-migrate/bin/db-migrate down ",
+        "migrate-reset": "set ENV=test && node node_modules/db-migrate/bin/db-migrate --env test up && node node_modules/db-migrate/bin/db-migrate reset",
+
+        "test1": "yarn build && yarn migrate-down && yarn migrate-up && yarn jasmine && db-migrate --env test reset",
+        "test": "yarn docker-down && yarn docker-up && yarn build &&  yarn test1",
+
+        "prettier": "prettier --config .prettierrc.json 'src/**/*.ts' --write",
+        "lint": "eslint src/*.ts",
+        "lint-fix": "eslint src/*.ts --fix",
+        "docker-up": "docker-compose up -d  && docker ps -a",
+        "exec1": "docker exec -it project2 psql -h localhost -U shopping_user -d postgres",
+        "docker-down": "docker-compose down && sudo rm -rf data/project2postgres data/pgadmin-data"
+    },
+    "devDependencies": {
+        "@types/bcrypt": "^5.0.0",
+        "@types/db-migrate-base": "^0.0.10",
+        "@types/db-migrate-pg": "^0.0.10",
+        "@types/express": "^4.17.13",
+        "@types/jasmine": "^4.0.3",
+        "@types/jsonwebtoken": "^8.5.8",
+        "@types/lodash": "^4.14.182",
+        "@types/node": "^17.0.31",
+        "@types/pg": "^8.6.5",
+        "@types/supertest": "^2.0.12",
+        "@typescript-eslint/eslint-plugin": "^5.22.0",
+        "@typescript-eslint/parser": "^5.22.0",
+        "bcrypt": "^5.0.1",
+        "cors": "^2.8.5",
+        "db-migrate": "^0.11.13",
+        "db-migrate-pg": "^1.2.2",
+        "dotenv": "^16.0.0",
+        "eslint": "^8.14.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "express": "^4.18.1",
+        "jasmine": "^4.1.0",
+        "jasmine-spec-reporter": "^7.0.0",
+        "jasmine-ts": "^0.4.0",
+        "jsonwebtoken": "^8.5.1",
+        "lodash": "^4.17.21",
+        "pg": "^8.7.3",
+        "prettier": "^2.6.2",
+        "supertest": "^6.2.3",
+        "ts-node": "^10.7.0",
+        "tsc-watch": "^5.0.3",
+        "typescript": "^4.6.4"
+    }
+}

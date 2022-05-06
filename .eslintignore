@@ -1,0 +1,5 @@
+# src/public/thumbs/*
+node_modules/
+dist
+spec
+data
